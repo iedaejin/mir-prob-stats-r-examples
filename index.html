@@ -5,24 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>R examples — Probability and Statistics</title>
   <style>
-    body { font: 18px/1.5 Georgia, serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
-    h1 { font-size: 1.8rem; line-height: 1.2; }
-    h2 { font-size: 1.25rem; margin-top: 2rem; }
+    body { font: 18px/1.5 Georgia, serif; margin: 0; color: #1a1a1a; }
     a { color: #0b3a6a; }
     code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 0.9rem; }
     pre { background: #f4f6f8; padding: 0.8rem 1rem; overflow: auto; }
-    nav ol { padding-left: 1.2rem; }
+    .layout { display: flex; align-items: flex-start; }
+    nav { position: sticky; top: 0; width: 18rem; flex: none; max-height: 100vh; overflow: auto; padding: 1.25rem 1rem 2rem; border-right: 1px solid #d8dee6; background: #f7f9fb; font-size: 0.95rem; line-height: 1.35; }
+    nav h2 { font-size: 1rem; margin: 0 0 0.6rem; }
+    nav ol { margin: 0; padding-left: 1.2rem; }
+    nav li { margin: 0.35rem 0; }
+    nav .exams { list-style: none; margin: 0.8rem 0 0; padding: 0; color: #333; }
+    main { padding: 1.5rem 2rem 3rem; max-width: 42rem; }
+    h1 { font-size: 1.8rem; line-height: 1.2; }
+    main h2 { font-size: 1.25rem; margin-top: 2rem; }
     .note { color: #333; }
+    @media (max-width: 800px) {
+      .layout { display: block; }
+      nav { position: static; width: auto; max-height: none; border-right: 0; border-bottom: 1px solid #d8dee6; }
+    }
   </style>
 </head>
 <body>
-  <h1>R examples</h1>
-  <p>Probability and Statistics (for Policy Analysis), MIR, SPEGA, IE University, Term 1, SEP-2026 S-2.</p>
-  <p>Prof. Dae-Jin Lee, <a href="mailto:daelee@faculty.ie.edu">daelee@faculty.ie.edu</a>, IE University — Scitech.</p>
-  <p>Each session is one folder. Open that folder in RStudio and knit the files in the order below. Knit from inside the folder, so <code>read_csv("data/...")</code> finds the CSV that sits next to the script.</p>
-
-  <h2>Contents</h2>
+<div class="layout">
   <nav>
+    <h2>Contents</h2>
     <ol>
       <li><a href="#01-introduction">Session 1 — Introduction</a></li>
       <li><a href="#02-causation">Session 2 — Causation</a></li>
@@ -42,9 +48,14 @@
       <li><a href="#18-controlling-for-confounders-pt1">Session 18 — Confounders, part 1</a></li>
       <li><a href="#19-controlling-for-confounders-pt2">Session 19 — Confounders, part 2</a></li>
       <li><a href="#20-mechanisms">Session 20 — Mechanisms</a></li>
-      <li>Sessions 8, 15, and 21–22 are exams and have no new files.</li>
     </ol>
+    <p class="exams">Sessions 8, 15, and 21–22 are exams and have no new files.</p>
   </nav>
+  <main>
+  <h1>R examples</h1>
+  <p>Probability and Statistics (for Policy Analysis), MIR, SPEGA, IE University, Term 1, SEP-2026 S-2.</p>
+  <p>Prof. Dae-Jin Lee, <a href="mailto:daelee@faculty.ie.edu">daelee@faculty.ie.edu</a>, IE University — Scitech.</p>
+  <p>Each session is one folder. Open that folder in RStudio and knit the files in the order below. Knit from inside the folder, so <code>read_csv("data/...")</code> finds the CSV that sits next to the script.</p>
 
   <h2>Once, before the first knit</h2>
   <pre>install.packages(c("rmarkdown", "knitr", "tidyverse", "devtools"))
@@ -217,5 +228,7 @@ devtools::install_github("kosukeimai/qss-package")</pre>
         <li><a href="20-mechanisms/20-mechanisms.Rmd">20-mechanisms.Rmd</a> — An effect is not the same size in every subgroup</li>
       </ul>
     </section>
+  </main>
+</div>
 </body>
 </html>
