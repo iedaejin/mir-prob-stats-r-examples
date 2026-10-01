@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R examples — Probability and Statistics</title>
+  <style>
+    body { font: 18px/1.5 Georgia, serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1 { font-size: 1.8rem; line-height: 1.2; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; }
+    a { color: #0b3a6a; }
+    code, pre { font-family: ui-monospace, Menlo, monospace; font-size: 0.9rem; }
+    pre { background: #f4f6f8; padding: 0.8rem 1rem; overflow: auto; }
+    nav ol { padding-left: 1.2rem; }
+    .note { color: #333; }
+  </style>
+</head>
+<body>
+  <h1>R examples</h1>
+  <p>Probability and Statistics (for Policy Analysis), MIR, SPEGA, IE University, Term 1, SEP-2026 S-2.</p>
+  <p>Prof. Dae-Jin Lee, <a href="mailto:daelee@faculty.ie.edu">daelee@faculty.ie.edu</a>, IE University — Scitech.</p>
+  <p>Each session is one folder. Open that folder in RStudio and knit the files in the order below. Knit from inside the folder, so <code>read_csv("data/...")</code> finds the CSV that sits next to the script.</p>
+
+  <h2>Contents</h2>
+  <nav>
+    <ol>
+      <li><a href="#01-introduction">Session 1 — Introduction</a></li>
+      <li><a href="#02-causation">Session 2 — Causation</a></li>
+      <li><a href="#03-describing-a-single-variable">Session 3 — One variable</a></li>
+      <li><a href="#04-correlation-pt1">Session 4 — Correlation, part 1</a></li>
+      <li><a href="#05-correlation-pt2">Session 5 — Correlation, part 2</a></li>
+      <li><a href="#06-regression-description-prediction-pt1">Session 6 — Regression, part 1</a></li>
+      <li><a href="#07-regression-description-prediction-pt2">Session 7 — Regression, part 2</a></li>
+      <li><a href="#09-probability-theory-pt1">Session 9 — Probability, part 1</a></li>
+      <li><a href="#10-probability-theory-pt2">Session 10 — Probability, part 2</a></li>
+      <li><a href="#11-estimation-and-uncertainty">Session 11 — Estimation and uncertainty</a></li>
+      <li><a href="#12-hypothesis-testing">Session 12 — Hypothesis testing</a></li>
+      <li><a href="#13-reversion-to-the-mean">Session 13 — Reversion to the mean</a></li>
+      <li><a href="#14-correlation-and-causation">Session 14 — Correlation and causation</a></li>
+      <li><a href="#16-randomized-experiments-pt1">Session 16 — Randomized experiments, part 1</a></li>
+      <li><a href="#17-randomized-experiments-pt2">Session 17 — Randomized experiments, part 2</a></li>
+      <li><a href="#18-controlling-for-confounders-pt1">Session 18 — Confounders, part 1</a></li>
+      <li><a href="#19-controlling-for-confounders-pt2">Session 19 — Confounders, part 2</a></li>
+      <li><a href="#20-mechanisms">Session 20 — Mechanisms</a></li>
+      <li>Sessions 8, 15, and 21–22 are exams and have no new files.</li>
+    </ol>
+  </nav>
+
+  <h2>Once, before the first knit</h2>
+  <pre>install.packages(c("rmarkdown", "knitr", "tidyverse", "devtools"))
+devtools::install_github("kosukeimai/qss-package")</pre>
+  <p class="note">Sessions 1 and 2 load datasets with <code>library(qss)</code>. Later sessions use the CSV in that session’s <code>data/</code> folder. Those CSV files are course examples. They are not the QSS authors’ files. The QSS files used in the Posit Cloud labs are in <a href="https://github.com/iedaejin/mir-prob-stats">mir-prob-stats</a>.</p>
+  <p>Run the chunk, then say what the number means. A slope, a p-value, or an interval does not by itself make the claim causal.</p>
+  <p>Source: <a href="https://github.com/iedaejin/mir-prob-stats-r-examples">github.com/iedaejin/mir-prob-stats-r-examples</a>.</p>
+
+    <section id="01-introduction">
+      <h2>Session 1 — Introduction</h2>
+      <p>Datasets come from the qss package (UNpop).</p>
+      <ul>
+        <li><a href="01-introduction/01-setup.Rmd">01-setup.Rmd</a> — Install and load packages</li>
+        <li><a href="01-introduction/01-arithmetic.Rmd">01-arithmetic.Rmd</a> — Calculator</li>
+        <li><a href="01-introduction/01-unpop.Rmd">01-unpop.Rmd</a> — UN population: rows, columns, one summary</li>
+        <li><a href="01-introduction/01-objects.Rmd">01-objects.Rmd</a> — Named objects</li>
+        <li><a href="01-introduction/01-vectors.Rmd">01-vectors.Rmd</a> — A vector of world population</li>
+        <li><a href="01-introduction/01-functions.Rmd">01-functions.Rmd</a> — One small function</li>
+        <li><a href="01-introduction/01-setup.R">01-setup.R</a> — Same setup as a script</li>
+        <li><a href="01-introduction/01-r-basics.R">01-r-basics.R</a> — Longer script of the same steps</li>
+      </ul>
+    </section>
+    <section id="02-causation">
+      <h2>Session 2 — Causation</h2>
+      <p>Datasets come from the qss package (resume, and social for the later GOTV file).</p>
+      <ul>
+        <li><a href="02-causation/02-resume.Rmd">02-resume.Rmd</a> — Callback rates by race. In class.</li>
+        <li><a href="02-causation/02-subsetting.Rmd">02-subsetting.Rmd</a> — Filters and race by sex. Optional.</li>
+        <li><a href="02-causation/02-potential-outcomes.R">02-potential-outcomes.R</a> — Script for the potential-outcomes contrast</li>
+        <li><a href="02-causation/02-social.Rmd">02-social.Rmd</a> — Social-pressure GOTV. Use this in session 16, not session 2.</li>
+      </ul>
+    </section>
+    <section id="03-describing-a-single-variable">
+      <h2>Session 3 — One variable</h2>
+      <p>Reads data/country_indicators.csv in this folder.</p>
+      <ul>
+        <li><a href="03-describing-a-single-variable/03-variable-types.Rmd">03-variable-types.Rmd</a> — What kind of variable</li>
+        <li><a href="03-describing-a-single-variable/03-summaries.Rmd">03-summaries.Rmd</a> — Mean, median, sd, IQR</li>
+        <li><a href="03-describing-a-single-variable/03-histograms-boxplots.Rmd">03-histograms-boxplots.Rmd</a> — Histogram and boxplot</li>
+        <li><a href="03-describing-a-single-variable/03-describe.R">03-describe.R</a> — Same summaries as a script</li>
+      </ul>
+    </section>
+    <section id="04-correlation-pt1">
+      <h2>Session 4 — Correlation, part 1</h2>
+      <p>Reads data/country_indicators.csv in this folder.</p>
+      <ul>
+        <li><a href="04-correlation-pt1/04-scatterplots.Rmd">04-scatterplots.Rmd</a> — Scatter plots</li>
+        <li><a href="04-correlation-pt1/04-correlation.Rmd">04-correlation.Rmd</a> — Correlation</li>
+        <li><a href="04-correlation-pt1/04-variation.Rmd">04-variation.Rmd</a> — Restricted range</li>
+        <li><a href="04-correlation-pt1/04-association.R">04-association.R</a> — Same association as a script</li>
+      </ul>
+    </section>
+    <section id="05-correlation-pt2">
+      <h2>Session 5 — Correlation, part 2</h2>
+      <p>Reads data/country_indicators.csv in this folder. No new required chapter; same idea as session 4.</p>
+      <ul>
+        <li><a href="05-correlation-pt2/05-outliers.Rmd">05-outliers.Rmd</a> — Outliers</li>
+        <li><a href="05-correlation-pt2/05-nonlinear.Rmd">05-nonlinear.Rmd</a> — A curve that correlation misses</li>
+        <li><a href="05-correlation-pt2/05-ir-examples.Rmd">05-ir-examples.Rmd</a> — Several pairs</li>
+        <li><a href="05-correlation-pt2/05-regression-preview.Rmd">05-regression-preview.Rmd</a> — A first line</li>
+        <li><a href="05-correlation-pt2/05-correlation-deep.R">05-correlation-deep.R</a> — Same checks as a script</li>
+      </ul>
+    </section>
+    <section id="06-regression-description-prediction-pt1">
+      <h2>Session 6 — Regression, part 1</h2>
+      <p>Reads data/country_indicators.csv in this folder. Description and prediction, not a cause.</p>
+      <ul>
+        <li><a href="06-regression-description-prediction-pt1/06-simple-ols.Rmd">06-simple-ols.Rmd</a> — One least-squares line</li>
+        <li><a href="06-regression-description-prediction-pt1/06-prediction.Rmd">06-prediction.Rmd</a> — Fitted values</li>
+        <li><a href="06-regression-description-prediction-pt1/06-democracy.Rmd">06-democracy.Rmd</a> — A predictor is not a lever</li>
+        <li><a href="06-regression-description-prediction-pt1/06-ols.R">06-ols.R</a> — Same line as a script</li>
+      </ul>
+    </section>
+    <section id="07-regression-description-prediction-pt2">
+      <h2>Session 7 — Regression, part 2</h2>
+      <p>Reads data/country_indicators.csv in this folder.</p>
+      <ul>
+        <li><a href="07-regression-description-prediction-pt2/07-residuals.Rmd">07-residuals.Rmd</a> — Residuals</li>
+        <li><a href="07-regression-description-prediction-pt2/07-multiple.Rmd">07-multiple.Rmd</a> — More than one predictor</li>
+        <li><a href="07-regression-description-prediction-pt2/07-prediction-vs-causation.Rmd">07-prediction-vs-causation.Rmd</a> — A fitted value is not an effect</li>
+        <li><a href="07-regression-description-prediction-pt2/07-regression-pt2.R">07-regression-pt2.R</a> — Same steps as a script</li>
+      </ul>
+    </section>
+    <section id="09-probability-theory-pt1">
+      <h2>Session 9 — Probability, part 1</h2>
+      <p>Reads data/survey_attitudes.csv in this folder.</p>
+      <ul>
+        <li><a href="09-probability-theory-pt1/09-frequency.Rmd">09-frequency.Rmd</a> — Probability as a long-run share</li>
+        <li><a href="09-probability-theory-pt1/09-conditional.Rmd">09-conditional.Rmd</a> — Conditional probability</li>
+        <li><a href="09-probability-theory-pt1/09-simulate.Rmd">09-simulate.Rmd</a> — A small simulation</li>
+      </ul>
+    </section>
+    <section id="10-probability-theory-pt2">
+      <h2>Session 10 — Probability, part 2</h2>
+      <p>10-survey-rv.Rmd reads data/survey_attitudes.csv. The other two files simulate coin-toss style draws.</p>
+      <ul>
+        <li><a href="10-probability-theory-pt2/10-bernoulli.Rmd">10-bernoulli.Rmd</a> — One yes-or-no draw</li>
+        <li><a href="10-probability-theory-pt2/10-binomial.Rmd">10-binomial.Rmd</a> — A count of successes</li>
+        <li><a href="10-probability-theory-pt2/10-survey-rv.Rmd">10-survey-rv.Rmd</a> — A survey score as a random variable</li>
+      </ul>
+    </section>
+    <section id="11-estimation-and-uncertainty">
+      <h2>Session 11 — Estimation and uncertainty</h2>
+      <p>Reads data/survey_attitudes.csv in this folder.</p>
+      <ul>
+        <li><a href="11-estimation-and-uncertainty/11-one-sample.Rmd">11-one-sample.Rmd</a> — One sample</li>
+        <li><a href="11-estimation-and-uncertainty/11-sampling-dist.Rmd">11-sampling-dist.Rmd</a> — Sampling distribution</li>
+        <li><a href="11-estimation-and-uncertainty/11-ci.Rmd">11-ci.Rmd</a> — A confidence interval</li>
+      </ul>
+    </section>
+    <section id="12-hypothesis-testing">
+      <h2>Session 12 — Hypothesis testing</h2>
+      <p>Reads data/survey_attitudes.csv in this folder.</p>
+      <ul>
+        <li><a href="12-hypothesis-testing/12-two-groups.Rmd">12-two-groups.Rmd</a> — Two groups</li>
+        <li><a href="12-hypothesis-testing/12-ci-vs-test.Rmd">12-ci-vs-test.Rmd</a> — Interval and test</li>
+        <li><a href="12-hypothesis-testing/12-fishing.Rmd">12-fishing.Rmd</a> — Too many comparisons</li>
+      </ul>
+    </section>
+    <section id="13-reversion-to-the-mean">
+      <h2>Session 13 — Reversion to the mean</h2>
+      <p>13-countries.Rmd reads data/country_indicators.csv. The other two files simulate.</p>
+      <ul>
+        <li><a href="13-reversion-to-the-mean/13-simulate-reversion.Rmd">13-simulate-reversion.Rmd</a> — Simulate reversion</li>
+        <li><a href="13-reversion-to-the-mean/13-select-extremes.Rmd">13-select-extremes.Rmd</a> — Select the extremes</li>
+        <li><a href="13-reversion-to-the-mean/13-countries.Rmd">13-countries.Rmd</a> — The same pattern in a country file</li>
+      </ul>
+    </section>
+    <section id="14-correlation-and-causation">
+      <h2>Session 14 — Correlation and causation</h2>
+      <p>Reads data/country_indicators.csv and data/survey_attitudes.csv in this folder.</p>
+      <ul>
+        <li><a href="14-correlation-and-causation/14-naive-lm.Rmd">14-naive-lm.Rmd</a> — A line that is only an association</li>
+        <li><a href="14-correlation-and-causation/14-adjust.Rmd">14-adjust.Rmd</a> — Adding GDP does not create a cause</li>
+        <li><a href="14-correlation-and-causation/14-survey-assoc.Rmd">14-survey-assoc.Rmd</a> — Another association, and a rival story</li>
+      </ul>
+    </section>
+    <section id="16-randomized-experiments-pt1">
+      <h2>Session 16 — Randomized experiments, part 1</h2>
+      <p>Reads data/diplomacy_experiment.csv in this folder. The QSS social-pressure file is 02-causation/02-social.Rmd.</p>
+      <ul>
+        <li><a href="16-randomized-experiments-pt1/16-diplomacy-dim.Rmd">16-diplomacy-dim.Rmd</a> — Difference in means after random assignment</li>
+      </ul>
+    </section>
+    <section id="17-randomized-experiments-pt2">
+      <h2>Session 17 — Randomized experiments, part 2</h2>
+      <p>Reads data/diplomacy_experiment.csv in this folder.</p>
+      <ul>
+        <li><a href="17-randomized-experiments-pt2/17-rct-tables.Rmd">17-rct-tables.Rmd</a> — Read a two-group table</li>
+      </ul>
+    </section>
+    <section id="18-controlling-for-confounders-pt1">
+      <h2>Session 18 — Confounders, part 1</h2>
+      <p>Reads data/aid_observational.csv in this folder.</p>
+      <ul>
+        <li><a href="18-controlling-for-confounders-pt1/18-confounding-intro.Rmd">18-confounding-intro.Rmd</a> — A gap that is not yet an effect</li>
+      </ul>
+    </section>
+    <section id="19-controlling-for-confounders-pt2">
+      <h2>Session 19 — Confounders, part 2</h2>
+      <p>Reads data/aid_observational.csv in this folder.</p>
+      <ul>
+        <li><a href="19-controlling-for-confounders-pt2/19-aid-adjusted.Rmd">19-aid-adjusted.Rmd</a> — The same coefficient before and after covariates</li>
+      </ul>
+    </section>
+    <section id="20-mechanisms">
+      <h2>Session 20 — Mechanisms</h2>
+      <p>Reads data/mechanism_diplomatic_contact.csv in this folder.</p>
+      <ul>
+        <li><a href="20-mechanisms/20-mechanisms.Rmd">20-mechanisms.Rmd</a> — An effect is not the same size in every subgroup</li>
+      </ul>
+    </section>
+</body>
+</html>
