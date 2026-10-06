@@ -60,7 +60,11 @@
 
   <h2>Once, before the first knit</h2>
   <pre>install.packages(c("rmarkdown", "knitr", "tidyverse", "devtools"))
-devtools::install_github("kosukeimai/qss-package")</pre>
+
+# if you have not installed the `devtools` package
+# install.packages("devtools")
+library("devtools")
+install_github("kosukeimai/qss-package", build_vignettes = TRUE)</pre>
   <p class="note">Sessions 1 and 2 load datasets with <code>library(qss)</code>. Later sessions use the CSV in that session’s <code>data/</code> folder. Those CSV files are course examples. They are not the QSS authors’ files. The QSS files used in the Posit Cloud labs are in <a href="https://github.com/iedaejin/mir-prob-stats">mir-prob-stats</a>.</p>
   <p>Run the chunk, then say what the number means. A slope, a p-value, or an interval does not by itself make the claim causal.</p>
   <p>Source: <a href="https://github.com/iedaejin/mir-prob-stats-r-examples">github.com/iedaejin/mir-prob-stats-r-examples</a>.</p>
